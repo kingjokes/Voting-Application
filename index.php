@@ -146,8 +146,8 @@
 
                             </div>
                             <br><br>
-<!--                            <button class="login-button w3-btn w3-hover-shadow w3-hover-red w3-mobile" id="reg">Submit</button>-->
-                            <a href="javascript:void(0)" id="close" class="login-button w3-btn w3-hover-shadow w3-hover-red w3-mobile" >Submit</a>
+                           <button class="login-button w3-btn w3-hover-shadow w3-hover-red w3-mobile" id="reg">Submit</button>
+<!--                             <a href="javascript:void(0)" id="close" class="login-button w3-btn w3-hover-shadow w3-hover-red w3-mobile" >Submit</a> -->
                             <br><br>
                             <script>
                                 $(document).ready(function(){
