@@ -54,9 +54,7 @@
                 border-radius: 50px;
                 width: 100%;
             }
-            .calculator{
-                table-layout: fixed;
-            }
+          
 
 
             .mybuttons {
