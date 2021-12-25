@@ -11,7 +11,7 @@ Online Voting Application using PHP(OOP), Vanilla JS, JQuery, Bootstrap, PHP Spr
   <li>Easy voters and candidates management by admin</li>
   <li>Candidate votes tracking</li>
   <li>Voting log which shows the breakdown of votes by each user</li>
-  <li>Voters excel sheet data upload<li>
+  <li>Voters excel sheet data upload</li>
   <li>Voting log / voters list pdf generation</li>
   <li> Admin and Super-admin implementation </li>
   
