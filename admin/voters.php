@@ -19,12 +19,12 @@ if(isset($_GET['delete'])){
 }
 ?>
 <div class="py-5">
-    <div class="row">
+    <div class="row w3-padding">
         <div class="col-12 col-md-1 col-lg-1 col-sm-1">
             &nbsp;
         </div>
         <div class="col-12 col-md-10 col-lg-10 col-sm-10">
-            <div class="w3-responsive">
+
                 <div class="w3-container mb-3">
                     <div class="w3-right">
                         <input type="text" class="w3-card w3-text-dark-gray w3-input  w3-padding w3-round-medium w3-tiny w3-border w3-text-white" id="input" placeholder="search voters">
@@ -34,16 +34,15 @@ if(isset($_GET['delete'])){
                 </div>
                 <div id="print">
                     <h6 class="font-weight-bold">Voters List</h6>
-                    <table class="w3-table-all data-table">
+                    <div class="w3-responsive">
+                      <table class="w3-table-all data-table">
                         <thead>
                         <tr>
                             <th>SN</th>
+                            <th>Matric No</th>
                             <th>Fullname</th>
-                            <th>Email</th>
                             <th>Dept</th>
-                            <th>Faculty</th>
                             <th>Grade</th>
-                            <th>Graduation</th>
                             <th>Vote status</th>
                         </tr>
                         </thead>
@@ -55,9 +54,7 @@ if(isset($_GET['delete'])){
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td>&nbsp;</td>
                                 <td>No data found</td>
-                                <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                             </tr>
@@ -68,14 +65,12 @@ if(isset($_GET['delete'])){
                                 ?>
                                 <tr style="font-size: 14px">
                                     <td><?php echo $count ?></td>
-                                    <td class="text-capitalize">
+                                    <td style="text-transform: uppercase" class="text-uppercase">	<?php echo $result['matric_no']?></td>
+                                    <td style="text-transform: capitalize" class="text-capitalize">
                                         <?php echo $result['surname'].' '.$result['other_names'] ?>
                                     </td>
-                                    <td class="text-lowercase"><?php echo $result['email'] ?></td>
-                                    <td>	<?php echo $result['dept']?></td>
-                                    <td>	<?php echo $result['faculty']?></td>
-                                    <td class="text-capitalize">	<?php echo str_replace('_',' ',$result['grade'])?></td>
-                                    <td>	<?php echo $result['graduation']?></td>
+                                    <td  style="text-transform: capitalize">	<?php echo $result['dept']?></td>
+                                    <td style="text-transform: capitalize" class="text-capitalize">	<?php echo str_replace('_',' ',$result['grade'])?></td>
                                     <td>
                                         <?php
                                         echo  $result['status']== 1
@@ -100,19 +95,18 @@ if(isset($_GET['delete'])){
 
 
                     </table>
+                    </div>
                 </div>
-
-
                 <br>
                 <button class="w3-btn w3-teal w3-small w3-padding w3-card w3-round-medium " onclick="PrintDiv('print')">
                     <i class="fa fa-file-pdf"></i>
                     Print List
                 </button>
             </div>
-        </div>
-
     </div>
+
 </div>
+
 
 <script>
     function PrintDiv(id) {

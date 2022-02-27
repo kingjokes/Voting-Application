@@ -95,8 +95,17 @@ class AdminVoterClass{
     {
         $query = $this->conn->query("select * from candidates where candidate_position='$position'");
         $sum = $this->conn->query("SELECT SUM(candidate_cvotes) AS  total  FROM candidates WHERE candidate_position = '$position'");
-        return [$query->num_rows, $query,$sum->fetch_assoc()];
+        $newSum = $this->conn->query("SELECT *  FROM voting_log WHERE $position != '' ");
+        return [$query->num_rows, $query,$sum->fetch_assoc(),$newSum->num_rows];
     }
+
+    //get vote count for each candidate
+    public function getCandidateVoteCount(int $candidateID, string $position):int
+    {
+        $query = $this->conn->query("SELECT *  FROM voting_log WHERE $position = $candidateID ");
+        return $query->num_rows;
+    }
+
 
     //method to update candidate's details
     public function updateCandidate(int $id,string $fullname, string $position, $avatar=''):bool
@@ -204,21 +213,20 @@ class AdminVoterClass{
                 foreach ($Reader as $Row)
                 {
 
-                    $surname = $Row[0] ?? "";
-                    $email = $Row[1] ?? "";
+                    $matric = $Row[0] ?? "";
+                    $surname = $Row[1] ?? "";
                     $other_names= $Row[2] ?? "";
                     $grade = $Row[3] ?? "";
                     $dept = $Row[4] ?? "";
-                    $faculty = $Row[5] ?? "";
-                    $graduation= $Row[6] ?? "";
+                    $graduation= $Row[5] ?? "";
 
 
                     //foreach row, insert candidate if details does not exist
-                    $checker = ($this->conn->query("select * from voters where (surname ='$surname' and other_names='$other_names') or email = '$email'"))->num_rows;
-                    if($checker === 0){
-                        if($surname !== 'surname' || $email !== 'email'){
-                            $query = $this->conn->query("insert into voters (surname,other_names,email,grade,dept,faculty,graduation) 
-                            values ('$surname','$other_names','$surname$other_names@gmail.com','$grade','$dept','$faculty','$graduation')");
+                    if($surname !== 'surname' || $matric !== 'matric') {
+                        $checker = ($this->conn->query("select * from voters where (surname ='$surname' and other_names='$other_names') or matric_no = '$matric'"))->num_rows;
+                        if ($checker === 0) {
+                            $query = $this->conn->query("insert into voters (surname,other_names,email,grade,dept,matric_no,graduation,verification) 
+                            values ('$surname','$other_names','$surname$other_names@gmail.com','$grade','$dept','$matric','$graduation',1)");
                         }
                     }
 
@@ -242,4 +250,57 @@ class AdminVoterClass{
         $query = $this->conn->query("select distinct voters.*, voting_log.president,voting_log.vice_president,voting_log.vp_diaspora,voting_log.general_secretary,voting_log.assistant_secretary,voting_log.treasurer,voting_log.financial_secretary,voting_log.publicity_secretary from voters left join voting_log on voters.id=voting_log.voter_id order by voters.surname ");
         return [$query->num_rows,$query];
     }
+
+    //method to get vote breakdown from uploaded voters
+    public function getUploadedVoteBreakDown():array
+    {
+        $query = $this->conn->query("select distinct voters.*, voting_log.president,voting_log.vice_president,voting_log.vp_diaspora,voting_log.general_secretary,voting_log.assistant_secretary,voting_log.treasurer,voting_log.financial_secretary,voting_log.publicity_secretary from voters left join voting_log on voters.id=voting_log.voter_id where voters.verification=1 order by voters.surname  ");
+        return [$query->num_rows,$query];
+    }
+    //method saves each votes submitted by voters
+    public function saveUploadedVote(array $votes,array $votersId):bool
+    {
+        foreach ($votersId as $id){
+            $updater = $this->conn->query("update voters set status=1 where id=$id");
+            if($updater){
+                //submit the voter's votes into a voting log for record purposes
+                $president=$votes['president']?? 0;
+                $vice_president=$votes['vice_president']?? 0;
+                $vp_diaspora=$votes['vp_diaspora']?? 0;
+                $general_secretary=$votes['general_secretary']?? 0;
+                $assistant_secretary=$votes['assistant_secretary']?? 0;
+                $treasurer=$votes['treasurer']?? 0;
+                $financial_secretary=$votes['financial_secretary']?? 0;
+                $publicity_secretary=$votes['publicity_secretary']?? 0;
+                $checker= $this->conn->query("select * from voting_log where voter_id = $id")->num_rows; //check if voter's log already exist
+                if($checker>0){
+                    //if yes, update voter's voting log
+                    $query = $this->conn->query("update voting_log set president='$president',vice_president='$vice_president',vp_diaspora='$vp_diaspora',general_secretary='$general_secretary',assistant_secretary='$assistant_secretary',treasurer='$treasurer',financial_secretary='$financial_secretary',publicity_secretary='$publicity_secretary' where voter_id=$id");
+                }
+                else{
+                    //insert voter's votes into the voting log
+                    $query= $this->conn->query("insert into voting_log (president, vice_president, vp_diaspora, general_secretary, assistant_secretary, treasurer, financial_secretary, publicity_secretary,voter_id)
+                values('$president','$vice_president','$vp_diaspora','$general_secretary','$assistant_secretary','$treasurer','$financial_secretary','$publicity_secretary',$id)");
+                }
+              //return a bool response
+            }
+            //for each vote submitted, increase the vote per candidate
+           foreach ($votes as $vote=>$value) {
+                if ($value !== '') {
+                    $getVote = (new UserClass($this->conn))->getCandidateVote($value);
+                    $newVote = 1 + (int)$getVote;
+                    $this->conn->query("update candidates set candidate_cvotes=$newVote where id=$value");
+
+                }
+                //mark voter's voting status as voted
+            }
+
+        }
+
+
+
+        return true;
+
+    }
+
 }

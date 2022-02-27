@@ -138,7 +138,80 @@ if($today< $start){
                 <div id="accordion">
 
                     <!-- getCandidatePerPosition method gets candidates per position-->
-                    <div class="card">
+                    <?php
+                    $positions= [
+                        'president',
+                        'vice_president',
+                        'vp_diaspora',
+                        'general_secretary',
+                        'assistant_secretary',
+                        'treasurer',
+                        'financial_secretary',
+                        'publicity_secretary'
+                    ];
+                    $count=1;
+                    foreach ($positions as $position): ?>
+                        <div class="card">
+                            <div class="card-header  w3-white-text" style="background: #0bacfa !important; color:white!important;">
+                                <a class="card-link w3-block text-capitalize" data-toggle="collapse" href="#collapse<?php echo $count?>" >
+                                    Vote  <?php echo str_replace('_',' ',$position) ?>
+                                </a>
+                            </div>
+                            <div id="collapse<?php echo $count?>" class="collapse show" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="w3-responsive">
+                                        <table class="w3-table  w3-left-align">
+                                            <tr class="w3-border-bottom w3-border-light-gray">
+                                                <th>&nbsp;</th>
+                                                <th>Candidate</th>
+                                                <th>Count</th>
+                                                <th>Vote</th>
+                                            </tr>
+                                            <?php
+                                            $query = $admin->getCandidatePerPosition($position);
+                                            if($query[0]===0){
+                                                ?>
+                                                <tr>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td>No candidate found</td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <?php
+                                            }else{
+                                                $sn=1;
+                                                while ($result = $query[1]->fetch_assoc()){?>
+                                                    <tr class="w3-border-bottom w3-border-light-gray">
+                                                        <td><?php echo $sn; ?></td>
+                                                        <td>
+                                                            <img src="../candidates/<?php echo $result['image'] ?>" alt="<?php echo $result['candidate_name'] ?>" class="" style="width:30px; height: 30px; border-radius: 50%">
+                                                            <span class="text-capitalize"> <?php echo $result['candidate_name'] ?></span>
+                                                        </td>
+                                                        <td><button class="btn w3-small btn-info">  <?php echo $admin->getCandidateVoteCount($result['id'],$position);?></button></td>
+                                                        <td>
+                                                            <input type="checkbox" class="w3-check" name="<?php echo $position ?>" value="<?php echo $result['id'] ?>"
+                                                            "<?php echo $position ?>"
+                                                            <?php echo $details['status'] == 1 ? 'disabled': ' ' ?>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                    $sn++;
+                                                }
+                                            }
+                                            ?>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                        $count++;
+                    endforeach;
+
+
+
+                    ?>
+                 <!--   <div class="card">
                         <div class="card-header  w3-white-text" style="background: #0bacfa !important; color:white!important;">
                             <a class="card-link w3-block" data-toggle="collapse" href="#collapseOne" >
                                 Vote President
@@ -155,9 +228,9 @@ if($today< $start){
                                             <th>Vote</th>
                                         </tr>
                                         <?php
-                                        $president = $admin->getCandidatePerPosition('president');
+/*                                        $president = $admin->getCandidatePerPosition('president');
                                         if($president[0]===0){
-                                            ?>
+                                            */?>
                                             <tr>
                                                 <td>&nbsp;</td>
                                                 <td>&nbsp;</td>
@@ -165,25 +238,25 @@ if($today< $start){
                                                 <td>&nbsp;</td>
                                             </tr>
                                             <?php
-                                        }else{
+/*                                        }else{
                                             $count=1;
-                                            while ($result = $president[1]->fetch_assoc()){?>
+                                            while ($result = $president[1]->fetch_assoc()){*/?>
                                                 <tr class="w3-border-bottom w3-border-light-gray">
-                                                    <td><?php echo $count; ?></td>
+                                                    <td><?php /*echo $count; */?></td>
                                                     <td>
-                                                        <img src="../candidates/<?php echo $result['image'] ?>" alt="<?php echo $result['candidate_name'] ?>" class="" style="width:30px; height: 30px; border-radius: 50%">
-                                                        <span class="text-capitalize"> <?php echo $result['candidate_name'] ?></span>
+                                                        <img src="../candidates/<?php /*echo $result['image'] */?>" alt="<?php /*echo $result['candidate_name'] */?>" class="" style="width:30px; height: 30px; border-radius: 50%">
+                                                        <span class="text-capitalize"> <?php /*echo $result['candidate_name'] */?></span>
                                                     </td>
-                                                    <td><button class="btn w3-small btn-info"><?php echo $result['candidate_cvotes'] ?></button></td>
+                                                    <td><button class="btn w3-small btn-info"><?php /*echo $result['candidate_cvotes'] */?></button></td>
                                                     <td>
-                                                        <input type="checkbox" class="w3-check" name="president" value="<?php echo $result['id'] ?>" "president" <?php echo $details['status'] == 1 ? 'disabled': ' ' ?>>
+                                                        <input type="checkbox" class="w3-check" name="president" value="<?php /*echo $result['id'] */?>" "president" <?php /*echo $details['status'] == 1 ? 'disabled': ' ' */?>>
                                                     </td>
                                                 </tr>
                                                 <?php
-                                                $count++;
+/*                                                $count++;
                                             }
                                         }
-                                        ?>
+                                        */?>
                                     </table>
                                 </div>
                             </div>
@@ -207,9 +280,9 @@ if($today< $start){
                                             <th>Vote</th>
                                         </tr>
                                         <?php
-                                        $president = $admin->getCandidatePerPosition('vice_president');
+/*                                        $president = $admin->getCandidatePerPosition('vice_president');
                                         if($president[0]===0){
-                                            ?>
+                                            */?>
                                             <tr>
                                                 <td>&nbsp;</td>
                                                 <td>&nbsp;</td>
@@ -217,25 +290,25 @@ if($today< $start){
                                                 <td>&nbsp;</td>
                                             </tr>
                                             <?php
-                                        }else{
+/*                                        }else{
                                             $count=1;
-                                            while ($result = $president[1]->fetch_assoc()){?>
+                                            while ($result = $president[1]->fetch_assoc()){*/?>
                                                 <tr class="w3-border-bottom w3-border-light-gray">
-                                                    <td><?php echo $count; ?></td>
+                                                    <td><?php /*echo $count; */?></td>
                                                     <td>
-                                                        <img src="../candidates/<?php echo $result['image'] ?>" alt="<?php echo $result['candidate_name'] ?>" class="" style="width:30px; height: 30px; border-radius: 50%">
-                                                        <span class="text-capitalize"> <?php echo $result['candidate_name'] ?></span>
+                                                        <img src="../candidates/<?php /*echo $result['image'] */?>" alt="<?php /*echo $result['candidate_name'] */?>" class="" style="width:30px; height: 30px; border-radius: 50%">
+                                                        <span class="text-capitalize"> <?php /*echo $result['candidate_name'] */?></span>
                                                     </td>
-                                                    <td><button class="btn w3-small btn-info"><?php echo $result['candidate_cvotes'] ?></button></td>
+                                                    <td><button class="btn w3-small btn-info"><?php /*echo $result['candidate_cvotes'] */?></button></td>
                                                     <td>
-                                                        <input type="checkbox" class="w3-check" name="vice_president" value="<?php echo $result['id'] ?>" "vice_president" <?php echo $details['status'] == 1 ? 'disabled': ' ' ?>>
+                                                        <input type="checkbox" class="w3-check" name="vice_president" value="<?php /*echo $result['id'] */?>" "vice_president" <?php /*echo $details['status'] == 1 ? 'disabled': ' ' */?>>
                                                     </td>
                                                 </tr>
                                                 <?php
-                                                $count++;
+/*                                                $count++;
                                             }
                                         }
-                                        ?>
+                                        */?>
                                     </table>
                                 </div>
                             </div>
@@ -258,9 +331,9 @@ if($today< $start){
                                             <th>Vote</th>
                                         </tr>
                                         <?php
-                                        $query = $admin->getCandidatePerPosition('vp_diaspora');
+/*                                        $query = $admin->getCandidatePerPosition('vp_diaspora');
                                         if($query[0]===0){
-                                            ?>
+                                            */?>
                                             <tr>
                                                 <td>&nbsp;</td>
                                                 <td>&nbsp;</td>
@@ -268,25 +341,25 @@ if($today< $start){
                                                 <td>&nbsp;</td>
                                             </tr>
                                             <?php
-                                        }else{
+/*                                        }else{
                                             $count=1;
-                                            while ($result = $query[1]->fetch_assoc()){?>
+                                            while ($result = $query[1]->fetch_assoc()){*/?>
                                                 <tr class="w3-border-bottom w3-border-light-gray">
-                                                    <td><?php echo $count; ?></td>
+                                                    <td><?php /*echo $count; */?></td>
                                                     <td>
-                                                        <img src="../candidates/<?php echo $result['image'] ?>" alt="<?php echo $result['candidate_name'] ?>" class="" style="width:30px; height: 30px; border-radius: 50%">
-                                                        <span class="text-capitalize"> <?php echo $result['candidate_name'] ?></span>
+                                                        <img src="../candidates/<?php /*echo $result['image'] */?>" alt="<?php /*echo $result['candidate_name'] */?>" class="" style="width:30px; height: 30px; border-radius: 50%">
+                                                        <span class="text-capitalize"> <?php /*echo $result['candidate_name'] */?></span>
                                                     </td>
-                                                    <td><button class="btn w3-small btn-info"><?php echo $result['candidate_cvotes'] ?></button></td>
+                                                    <td><button class="btn w3-small btn-info"><?php /*echo $result['candidate_cvotes'] */?></button></td>
                                                     <td>
-                                                        <input type="checkbox" class="w3-check" name="vp_diaspora" value="<?php echo $result['id'] ?>" "vp_diaspora" <?php echo $details['status'] == 1 ? 'disabled': ' ' ?>>
+                                                        <input type="checkbox" class="w3-check" name="vp_diaspora" value="<?php /*echo $result['id'] */?>" "vp_diaspora" <?php /*echo $details['status'] == 1 ? 'disabled': ' ' */?>>
                                                     </td>
                                                 </tr>
                                                 <?php
-                                                $count++;
+/*                                                $count++;
                                             }
                                         }
-                                        ?>
+                                        */?>
                                     </table>
                                 </div>
                             </div>
@@ -309,9 +382,9 @@ if($today< $start){
                                             <th>Vote</th>
                                         </tr>
                                         <?php
-                                        $query = $admin->getCandidatePerPosition('general_secretary');
+/*                                        $query = $admin->getCandidatePerPosition('general_secretary');
                                         if($query[0]===0){
-                                            ?>
+                                            */?>
                                             <tr>
                                                 <td>&nbsp;</td>
                                                 <td>&nbsp;</td>
@@ -319,25 +392,25 @@ if($today< $start){
                                                 <td>&nbsp;</td>
                                             </tr>
                                             <?php
-                                        }else{
+/*                                        }else{
                                             $count=1;
-                                            while ($result = $query[1]->fetch_assoc()){?>
+                                            while ($result = $query[1]->fetch_assoc()){*/?>
                                                 <tr class="w3-border-bottom w3-border-light-gray">
-                                                    <td><?php echo $count; ?></td>
+                                                    <td><?php /*echo $count; */?></td>
                                                     <td>
-                                                        <img src="../candidates/<?php echo $result['image'] ?>" alt="<?php echo $result['candidate_name'] ?>" class="" style="width:30px; height: 30px; border-radius: 50%">
-                                                        <span class="text-capitalize"> <?php echo $result['candidate_name'] ?></span>
+                                                        <img src="../candidates/<?php /*echo $result['image'] */?>" alt="<?php /*echo $result['candidate_name'] */?>" class="" style="width:30px; height: 30px; border-radius: 50%">
+                                                        <span class="text-capitalize"> <?php /*echo $result['candidate_name'] */?></span>
                                                     </td>
-                                                    <td><button class="btn w3-small btn-info"><?php echo $result['candidate_cvotes'] ?></button></td>
+                                                    <td><button class="btn w3-small btn-info"><?php /*echo $result['candidate_cvotes'] */?></button></td>
                                                     <td>
-                                                        <input type="checkbox" class="w3-check" name="general_secretary" value="<?php echo $result['id'] ?>" "general_secretary" <?php echo $details['status'] == 1 ? 'disabled': ' ' ?>>
+                                                        <input type="checkbox" class="w3-check" name="general_secretary" value="<?php /*echo $result['id'] */?>" "general_secretary" <?php /*echo $details['status'] == 1 ? 'disabled': ' ' */?>>
                                                     </td>
                                                 </tr>
                                                 <?php
-                                                $count++;
+/*                                                $count++;
                                             }
                                         }
-                                        ?>
+                                        */?>
                                     </table>
                                 </div>
                             </div>
@@ -360,9 +433,9 @@ if($today< $start){
                                             <th>Vote</th>
                                         </tr>
                                         <?php
-                                        $query = $admin->getCandidatePerPosition('assistant_secretary');
+/*                                        $query = $admin->getCandidatePerPosition('assistant_secretary');
                                         if($query[0]===0){
-                                            ?>
+                                            */?>
                                             <tr>
                                                 <td>&nbsp;</td>
                                                 <td>&nbsp;</td>
@@ -370,25 +443,25 @@ if($today< $start){
                                                 <td>&nbsp;</td>
                                             </tr>
                                             <?php
-                                        }else{
+/*                                        }else{
                                             $count=1;
-                                            while ($result = $query[1]->fetch_assoc()){?>
+                                            while ($result = $query[1]->fetch_assoc()){*/?>
                                                 <tr class="w3-border-bottom w3-border-light-gray">
-                                                    <td><?php echo $count; ?></td>
+                                                    <td><?php /*echo $count; */?></td>
                                                     <td>
-                                                        <img src="../candidates/<?php echo $result['image'] ?>" alt="<?php echo $result['candidate_name'] ?>" class="" style="width:30px; height: 30px; border-radius: 50%">
-                                                        <span class="text-capitalize"> <?php echo $result['candidate_name'] ?></span>
+                                                        <img src="../candidates/<?php /*echo $result['image'] */?>" alt="<?php /*echo $result['candidate_name'] */?>" class="" style="width:30px; height: 30px; border-radius: 50%">
+                                                        <span class="text-capitalize"> <?php /*echo $result['candidate_name'] */?></span>
                                                     </td>
-                                                    <td><button class="btn w3-small btn-info"><?php echo $result['candidate_cvotes'] ?></button></td>
+                                                    <td><button class="btn w3-small btn-info"><?php /*echo $result['candidate_cvotes'] */?></button></td>
                                                     <td>
-                                                        <input type="checkbox" class="w3-check" name="assistant_secretary" value="<?php echo $result['id'] ?>" "assistant_secretary" <?php echo $details['status'] == 1 ? 'disabled': ' ' ?>>
+                                                        <input type="checkbox" class="w3-check" name="assistant_secretary" value="<?php /*echo $result['id'] */?>" "assistant_secretary" <?php /*echo $details['status'] == 1 ? 'disabled': ' ' */?>>
                                                     </td>
                                                 </tr>
                                                 <?php
-                                                $count++;
+/*                                                $count++;
                                             }
                                         }
-                                        ?>
+                                        */?>
                                     </table>
                                 </div>
                             </div>
@@ -411,9 +484,9 @@ if($today< $start){
                                             <th>Vote</th>
                                         </tr>
                                         <?php
-                                        $query = $admin->getCandidatePerPosition('treasurer');
+/*                                        $query = $admin->getCandidatePerPosition('treasurer');
                                         if($query[0]===0){
-                                            ?>
+                                            */?>
                                             <tr>
                                                 <td>&nbsp;</td>
                                                 <td>&nbsp;</td>
@@ -421,25 +494,25 @@ if($today< $start){
                                                 <td>&nbsp;</td>
                                             </tr>
                                             <?php
-                                        }else{
+/*                                        }else{
                                             $count=1;
-                                            while ($result = $query[1]->fetch_assoc()){?>
+                                            while ($result = $query[1]->fetch_assoc()){*/?>
                                                 <tr class="w3-border-bottom w3-border-light-gray">
-                                                    <td><?php echo $count; ?></td>
+                                                    <td><?php /*echo $count; */?></td>
                                                     <td>
-                                                        <img src="../candidates/<?php echo $result['image'] ?>" alt="<?php echo $result['candidate_name'] ?>" class="" style="width:30px; height: 30px; border-radius: 50%">
-                                                        <span class="text-capitalize"> <?php echo $result['candidate_name'] ?></span>
+                                                        <img src="../candidates/<?php /*echo $result['image'] */?>" alt="<?php /*echo $result['candidate_name'] */?>" class="" style="width:30px; height: 30px; border-radius: 50%">
+                                                        <span class="text-capitalize"> <?php /*echo $result['candidate_name'] */?></span>
                                                     </td>
-                                                    <td><button class="btn w3-small btn-info"><?php echo $result['candidate_cvotes'] ?></button></td>
+                                                    <td><button class="btn w3-small btn-info"><?php /*echo $result['candidate_cvotes'] */?></button></td>
                                                     <td>
-                                                        <input type="checkbox" class="w3-check" name="treasurer" value="<?php echo $result['id'] ?>" "treasurer" <?php echo $details['status'] == 1 ? 'disabled': ' ' ?>>
+                                                        <input type="checkbox" class="w3-check" name="treasurer" value="<?php /*echo $result['id'] */?>" "treasurer" <?php /*echo $details['status'] == 1 ? 'disabled': ' ' */?>>
                                                     </td>
                                                 </tr>
                                                 <?php
-                                                $count++;
+/*                                                $count++;
                                             }
                                         }
-                                        ?>
+                                        */?>
                                     </table>
                                 </div>
                             </div>
@@ -462,9 +535,9 @@ if($today< $start){
                                             <th>Vote</th>
                                         </tr>
                                         <?php
-                                        $query = $admin->getCandidatePerPosition('financial_secretary');
+/*                                        $query = $admin->getCandidatePerPosition('financial_secretary');
                                         if($query[0]===0){
-                                            ?>
+                                            */?>
                                             <tr>
                                                 <td>&nbsp;</td>
                                                 <td>&nbsp;</td>
@@ -472,25 +545,25 @@ if($today< $start){
                                                 <td>&nbsp;</td>
                                             </tr>
                                             <?php
-                                        }else{
+/*                                        }else{
                                             $count=1;
-                                            while ($result = $query[1]->fetch_assoc()){?>
+                                            while ($result = $query[1]->fetch_assoc()){*/?>
                                                 <tr class="w3-border-bottom w3-border-light-gray">
-                                                    <td><?php echo $count; ?></td>
+                                                    <td><?php /*echo $count; */?></td>
                                                     <td>
-                                                        <img src="../candidates/<?php echo $result['image'] ?>" alt="<?php echo $result['candidate_name'] ?>" class="" style="width:30px; height: 30px; border-radius: 50%">
-                                                        <span class="text-capitalize"> <?php echo $result['candidate_name'] ?></span>
+                                                        <img src="../candidates/<?php /*echo $result['image'] */?>" alt="<?php /*echo $result['candidate_name'] */?>" class="" style="width:30px; height: 30px; border-radius: 50%">
+                                                        <span class="text-capitalize"> <?php /*echo $result['candidate_name'] */?></span>
                                                     </td>
-                                                    <td><button class="btn w3-small btn-info"><?php echo $result['candidate_cvotes'] ?></button></td>
+                                                    <td><button class="btn w3-small btn-info"><?php /*echo $result['candidate_cvotes'] */?></button></td>
                                                     <td>
-                                                        <input type="checkbox" class="w3-check" name="financial_secretary" value="<?php echo $result['id'] ?>" "financial_secretary" <?php echo $details['status'] == 1 ? 'disabled': ' ' ?>>
+                                                        <input type="checkbox" class="w3-check" name="financial_secretary" value="<?php /*echo $result['id'] */?>" "financial_secretary" <?php /*echo $details['status'] == 1 ? 'disabled': ' ' */?>>
                                                     </td>
                                                 </tr>
                                                 <?php
-                                                $count++;
+/*                                                $count++;
                                             }
                                         }
-                                        ?>
+                                        */?>
                                     </table>
                                 </div>
                             </div>
@@ -513,9 +586,9 @@ if($today< $start){
                                             <th>Vote</th>
                                         </tr>
                                         <?php
-                                        $query = $admin->getCandidatePerPosition('publicity_secretary');
+/*                                        $query = $admin->getCandidatePerPosition('publicity_secretary');
                                         if($query[0]===0){
-                                            ?>
+                                            */?>
                                             <tr>
                                                 <td>&nbsp;</td>
                                                 <td>&nbsp;</td>
@@ -523,30 +596,30 @@ if($today< $start){
                                                 <td>&nbsp;</td>
                                             </tr>
                                             <?php
-                                        }else{
+/*                                        }else{
                                             $count=1;
-                                            while ($result = $query[1]->fetch_assoc()){?>
+                                            while ($result = $query[1]->fetch_assoc()){*/?>
                                                 <tr class="w3-border-bottom w3-border-light-gray">
-                                                    <td><?php echo $count; ?></td>
+                                                    <td><?php /*echo $count; */?></td>
                                                     <td>
-                                                        <img src="../candidates/<?php echo $result['image'] ?>" alt="<?php echo $result['candidate_name'] ?>" class="" style="width:30px; height: 30px; border-radius: 50%">
-                                                        <span class="text-capitalize"> <?php echo $result['candidate_name'] ?></span>
+                                                        <img src="../candidates/<?php /*echo $result['image'] */?>" alt="<?php /*echo $result['candidate_name'] */?>" class="" style="width:30px; height: 30px; border-radius: 50%">
+                                                        <span class="text-capitalize"> <?php /*echo $result['candidate_name'] */?></span>
                                                     </td>
-                                                    <td><button class="btn w3-small btn-info"><?php echo $result['candidate_cvotes'] ?></button></td>
+                                                    <td><button class="btn w3-small btn-info"><?php /*echo $result['candidate_cvotes'] */?></button></td>
                                                     <td>
-                                                        <input type="checkbox" class="w3-check" name="publicity_secretary" value="<?php echo $result['id'] ?>" "publicity_secretary" <?php echo $details['status'] == 1 ? 'disabled': ' ' ?>>
+                                                        <input type="checkbox" class="w3-check" name="publicity_secretary" value="<?php /*echo $result['id'] */?>" "publicity_secretary" <?php /*echo $details['status'] == 1 ? 'disabled': ' ' */?>>
                                                     </td>
                                                 </tr>
                                                 <?php
-                                                $count++;
+/*                                                $count++;
                                             }
                                         }
-                                        ?>
+                                        */?>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
 
                 </div>

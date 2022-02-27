@@ -3,7 +3,7 @@
 include ("header.php");
 ?>
 <div class="py-5">
-    <div class="row">
+    <div class="row w3-padding">
         <div class="col-12 col-md-2 col-lg-2 col-sm-2">
             &nbsp;
         </div>

@@ -3,7 +3,7 @@ include "../config.php";
 include "../admin/AdminVoterClass.php";
 $admin = new AdminVoterClass($conn);
 
-if(!isset($_GET['voterID'])){ //if voterid is not found in the link, redirect voters to home page
+if(!isset($_GET['voterID'])){ //if voter id is not found in the link, redirect voters to home page
     header('location:../index.php');
 }
 

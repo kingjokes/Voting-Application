@@ -14,115 +14,129 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet"
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="../animate.css">
     <style>
         body {
-            font-family: 'Lato', sans-serif !important;
+            font-family: 'Public Sans', sans-serif!important;
+            background-color:rgb(255, 255, 255);
         }
         a{
             text-decoration: none !important;
             color:inherit !important;
         }
-        .login-inputs{
-            padding: 10px 20px;
-            font-size: 16px;
-            outline: none;
-            height: 50px;
-            /*width:% !important;*/
-            background: rgba(23, 23, 23, 0.72);
-            color: #616161;
-            border-radius: 3px;
-            font-weight: 500;
-            border: 1px solid transparent;
-            background: #fff;
-            box-shadow: 0 0 5px rgb(0 0 0 / 20%);
-        }
-        .login-button{
-            background: #ff2f2f !important;
-            box-shadow: 0 0 5px rgb(0 0 0 / 20%);
-            border: none;
-            color: #fff !important;
-            cursor: pointer;
-            padding: 13px 50px 12px 50px;
-            font-size: 17px;
-            font-weight: 400;
-            border-radius: 50px;
+
+        .contentHolder{
+            background-color: rgb(255, 255, 255);
+            color: rgb(33, 43, 54);
+            transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+            background-image: none;
+            overflow: hidden;
+            position: relative;
+            box-shadow: rgb(145 158 171 / 20%) 0px 0px 2px 0px, rgb(145 158 171 / 12%) 0px 12px 24px -4px;
+            border-radius: 16px;
+            z-index: 0;
             width: 100%;
+            max-width: 464px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 16px 0px 16px 16px;
+            height:100vh;
         }
-        .calculator{
-            table-layout: fixed;
+        .header{
+            margin:0 auto;
+            font-weight: 600;
+            line-height: 1.5;
+            font-size: 1.5rem;
+            font-family: "Public Sans", sans-serif;
+            padding-left: 40px;
+            padding-right: 40px;
         }
-        .calculator tr td input[type="button"]{
-            margin-bottom: 7px;
-            margin-left:3px;
-            margin-right:3px;
-            font-size: 11px;
-        }
-        .calculator tr td input[type="text"]{
-            margin:3px;
-            width:96%;
+        .formHolder{
+            margin: auto;
+            min-height: 100vh;
+            padding: 96px 5px;
+            color: rgb(33, 43, 54);
+            line-height: 1.5;
+            font-size: 1rem;
+            font-family: "Public Sans", sans-serif;
+            font-weight: 400;
+            justify-content: center;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+
 
         }
-        .bgimg-1{
-            position: relative;
-
-            background-position-x: 50%;
-            background-position-y: 50%;
-            background-repeat: no-repeat;
-            background-size: contain;
-            min-height: 100vh
+        .formHeader{
+            margin: 0px 0px 8px;
+            font-weight: 700;
+            line-height: 1.5;
+            font-size: 1.25rem;
+            font-family: "Public Sans", sans-serif;
 
         }
-        .bgimg-1 {
-            box-shadow:inset 0 0 0 150vw rgba(255,255,255,0.8);
-            background-image: url("LOGO EIT.PNG");
-
-        }
-        .myradio{
-            width:15px !important;
-            height:15px!important;
-        }
-        .answer-text{
-            font-size:16px !important;
-        }
-        .bgimg-1{
-            position: relative;
-
-            background-position-x: 50%;
-            background-position-y: 50%;
-            background-repeat: no-repeat;
-            background-size: contain;
-            min-height: 100vh
-
-        }
-        .bgimg-1 {
-            box-shadow:inset 0 0 0 150vw rgba(255,255,255,0.97);
-            background-image: url("{{asset('/img/logo.png')}}");
-
+        .formSubtitle{
+            margin: 0px;
+            line-height: 1.5;
+            font-size: 1rem;
+            font-family: "Public Sans", sans-serif;
+            font-weight: 400;
+            color: rgb(99, 115, 129);
         }
 
-        .mybuttons {
-            padding: 5px 10px;
-            margin: 10px 5px;
-            border-radius: 5px;
+        .formInput{
+            line-height: 1.4375em!important;
+            font-size: 1rem!important;
+            font-family: "Public Sans", sans-serif!important;
+            font-weight: 400!important;
+            color: rgb(33, 43, 54)!important;
+            cursor: text!important;
+            width: 100%!important;!important;
+            border-radius: 8px!important;
+            letter-spacing: inherit!important;
+            border: 0.5px solid rgb(145, 158, 171)!important;;
+            background: none;
+            height: 1.4375em;
+            margin: 0px;
+            -webkit-tap-highlight-color: transparent;
+            display: block;
+            animation-name: mui-auto-fill-cancel;
+            animation-duration: 10ms;
+            padding: 25px 10px;
+        }
+        .formButton{
+
+            -webkit-tap-highlight-color: transparent;
+            font-weight: 400;
+            line-height: 1.71429;
+            font-size: 0.9375rem;
+            text-transform: capitalize;
+            font-family: "Public Sans", sans-serif;
+            padding: 8px 22px;
+            border-radius: 8px;
+            color: rgb(255, 255, 255)!important;
+            background-color: rgb(55, 111, 208)!important;
+            width: 100%!important;
+            box-shadow: rgb(55, 111, 208 / 24%) 0px 8px 16px 0px;
+            height: 48px;
+            transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+            box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+            border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        }
+        .imageContainer{
+            width: 80px;
+            height: 80px;
             cursor: pointer;
-            background: #ddd;
-            border: 1px solid #ccc;
+            margin: 0 auto;
         }
-        .mybuttons:hover {
-            background: #ccc;
-        }
-        .unanswered{
-            color: #721c24 !important;
-            background-color: #FFB6C1 !important;
-            border-color: #f5c6cb !important;
-        }
-        .answered{
-            color: #155724 !important;
-            background-color: #d4edda !important;
-            border-color: #c3e6cb !important;
-        }
+
+
+
 
 
 
@@ -137,95 +151,106 @@
     </script>
 </head>
 <body class="">
-<div class="w3-row">
-    <div class="w3-col l6 m6 s12" style="background: #FAFAFA;min-height: 100vh; color:#535353;    padding: 15px 0;">
-        <br>
-        <div class=" w3-center">
-            <img class="w3-image " style="height:90px; width:90px" src="../images/logo.png">
-        </div>
-        <br>
-        <div class="wow fadeIn" data-wow-duration="2s" style="padding: 0 15px; line-height: 1.9">
-            <div class="w3-center">
-                <h3>Admin Login</h3>
+
+<div class="w3-row w3-padding">
+    <div class="w3-col l4 m5 s12 w3-hide-small">
+
+        <div class="contentHolder">
+
+            <div class="header">
+                <div class="imageContainer ">
+                    <img src="../images/logo.png" alt="" class="w3-image">
+                </div>
+                <br>
+                <span>Hi, Welcome Back</span>
             </div>
             <br>
-            <div class="w3-row">
-                <div class="w3-col l2 m12 s12">
-                    &nbsp;
+            <div class="imageHolder">
+                <img class="w3-image" src="../images/login.png">
+            </div>
+        </div>
+
+    </div>
+    <div class="w3-col l1 m1 s12">
+        &nbsp;
+    </div>
+    <div class="w3-col l6 m5 s12">
+        <div class="formHolder">
+            <div class="imageContainer w3-hide-large w3-hide-medium" style="margin-bottom: 25px!important;">
+                <a href="../index.php">
+                    <img src="../images/logo.png"  alt="" class="w3-image">
+                </a>
+
+            </div>
+            <br>
+            <h2 class="formHeader">Sign in as Admin.</h2>
+            <p class="formSubtitle">Enter your details below.</p>
+            <br>
+            <div class="">
+                <div id="success" class="alert alert-success alert-dismissible"  style="display: none">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    Login successful, redirecting now..
                 </div>
+                <div id="error" class="alert alert-danger alert-dismissible" style="display: none">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
 
-                <div class="w3-col l9 m12 s12">
-                    <div id="success" class="alert alert-success alert-dismissible"  style="display: none">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        Login successful, redirecting now..
-                    </div>
-                    <div id="error" class="alert alert-danger alert-dismissible" style="display: none">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+                <form id="form" class="" action="" method="post">
+                    <div class="row" >
+                        <div style="margin-bottom: 20px!important;" class="col col-12 col-md-12 col-lg-12 col-sm-12">
+                            <input class="formInput  w3-mobile" required   type="text"  placeholder="Enter your username" name="username" >
 
-                    </div>
-                    <form id="form" class="" action="" method="post"  style="line-height: 1.7 !important;">
-                        <input class="login-inputs w3-input  w3-mobile "  required  type="text" placeholder="Enter your username" name="username">
-                        <span class="text text-danger"></span>
-                        <br>
-                        <input class="login-inputs w3-input w3-mobile" required   type="password" placeholder="Enter your password" name="password" >
-                        <span class="text text-danger"></span>
-                        <br><br>
-                        <button class="login-button w3-btn w3-hover-shadow w3-hover-red w3-mobile" id="reg">Login</button>
-                        <br><br>
-                        <script>
-                            $(document).ready(function(){
-                                $('#form').on('submit', function(e){
-                                    e.preventDefault()
-                                    let data = $(this).serialize();
-                                    $.ajax({
-                                        method:'POST',
-                                        url:'login-checker.php',
-                                        data:data,
-                                        dataType:'text',
-                                        beforeSend: function(){
-                                            $('#reg').text('Checking details...')
-                                            $('#success, #error').fadeOut();
-                                        },
-                                        success: function(response){
-                                            if(response==="ok"){
-                                                $('#success').fadeIn()
-                                                $('#error').fadeOut()
-                                                   setTimeout(function(){
-                                                       window.location.href='dashboard.php'
-                                                   },3000)
+                        </div>
+                        <div style="margin-bottom: 20px!important;" class="col col-12 col-md-12 col-lg-12 col-sm-12">
+                            <input class="formInput   w3-mobile"  required  type="password" placeholder="Enter your password" name="password">
+                        </div>
+                       </div>
+                    <br>
 
-                                            }else{
-                                                $('#error').fadeIn().text(response)
-                                                $('#success').fadeOut();
-                                                $('#reg').text('Login')
-                                            }
+                    <button id="reg" style="  width: 100%!important;" class="formButton w3-btn w3-block">Login</button>
+                    <br><br>
+                    <script>
+                        $(document).ready(function(){
+                            $('#form').on('submit', function(e){
+                                e.preventDefault()
+                                let data = $(this).serialize();
+                                $.ajax({
+                                    method:'POST',
+                                    url:'login-checker.php',
+                                    data:data,
+                                    dataType:'text',
+                                    beforeSend: function(){
+                                        $('#reg').text('Checking details...')
+                                        $('#success, #error').fadeOut();
+                                    },
+                                    success: function(response){
+                                        if(response==="ok"){
+                                            $('#success').fadeIn()
+                                            $('#error').fadeOut()
+                                            setTimeout(function(){
+                                                window.location.href='dashboard.php'
+                                            },3000)
+
+                                        }else{
+                                            $('#error').fadeIn().text(response)
+                                            $('#success').fadeOut();
+                                            $('#reg').text('Login')
                                         }
-
-                                    })
+                                    }
 
                                 })
+
                             })
-                        </script>
-                    </form>
-                </div>
+                        })
+                    </script>
+                </form>
+
+
             </div>
-
-
-
-
-
-
         </div>
-        <div class="w3-center w3-padding">
-            <i class="w3-text-grey w3-small">LEVAS INC</i>
-        </div>
-    </div>
-    <div class="w3-col l6 m6 s12 w3-hide-small" style="background: #ffffff;min-height: 100vh; color:#535353;    padding: 15px 0;">
-        <br><br><br><br><br>
-        <img class="w3-image" src="../images/background.png" style="width: 90%; height: auto;">
-    </div>
 
+
+    </div>
 </div>
-
 </body>
 </html>

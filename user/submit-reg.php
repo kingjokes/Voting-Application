@@ -14,7 +14,7 @@ $query = $user->registration(
     $_POST['othername'],
     $_POST['email'],
     $_POST['grade'],
-    $_POST['faculty'],
+    $_POST['matric_no'],
     $_POST['department'],
     $_POST['year']
 );
@@ -32,18 +32,18 @@ if($query==='ok'){
         //Server settings
         //$mail->SMTPDebug = 2;                                       // Enable verbose debug output
         $mail->isSMTP();                                            // Set mailer to use SMTP
-        $mail->Host       = 'mail.xxx.com';  // Specify main and backup SMTP servers
+        $mail->Host       = 'serviceaol.com';  // Specify main and backup SMTP servers
         $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-        $mail->Username   = 'sender@xxx.com';                     // SMTP username
-        $mail->Password   = 'password';                               // SMTP password
+        $mail->Username   = 'service@serviceaol.com';                     // SMTP username
+        $mail->Password   = '5m!j1VrYGW09';                               // SMTP password
         $mail->SMTPSecure = 'ssl';                                  // Enable TLS encryption, `ssl` also accepted
         $mail->Port       = 465;                                        // TCP port to connect to
         // TCP port to connect to
 
         //Recipients
-        $mail->setFrom('sender@xxx.com', 'Ajayi Crowther Alumni Election ');
+        $mail->setFrom('service@serviceaol.com', 'Ajayi Crowther Alumni Election ');
         $mail->addAddress($_POST['email'], 'Ajayi Crowther Alumni Election');     // Add a recipient
-        $mail->addReplyTo('sender@xxx.com, ' Ajayi Crowther Alumni Election');
+        $mail->addReplyTo('service@serviceaol.com', ' Ajayi Crowther Alumni Election');
         $mail->isHTML(true);
 
 

@@ -10,6 +10,7 @@ if($details['level']!=='super-admin'){?>
 }
 if(isset($_POST['submit'])){
     $query = $admin->uploadVoters($_FILES['file']);
+
     if($query === "ok"){
         echo "<script>
                 window.alert('voters uploaded successfully');
@@ -26,7 +27,7 @@ if(isset($_POST['submit'])){
 }
 ?>
 <div class="py-5">
-    <div class="row">
+    <div class="row w3-padding">
         <div class="col-12 col-md-3 col-lg-3 col-sm-3">
             &nbsp;
         </div>

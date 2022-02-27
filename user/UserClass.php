@@ -13,10 +13,10 @@ class UserClass{
     }
 
     //method to register new voter
-    public function registration(string $surname, string $otherNames,string $email, string $grade,string $faculty, string $dept,  string $year):string
+    public function registration(string $surname, string $otherNames,string $email, string $grade,string $matric, string $dept,  string $year):string
     {
         //check if voter already exist using email
-        $checker = $this->conn->query("select * from voters where email='$email'");
+        $checker = $this->conn->query("select * from voters where email='$email' or (surname='$surname' and other_names='$otherNames')");
 
 
         if($checker->num_rows >0){
@@ -24,8 +24,8 @@ class UserClass{
         }
 
         //insert new voter into db
-        $query = $this->conn->query("insert into voters (surname,other_names,email,grade,dept,faculty,graduation) 
-        values ('$surname','$otherNames','$email','$grade','$dept','$faculty','$year')");
+        $query = $this->conn->query("insert into voters (surname,other_names,email,grade,dept,matric_no,graduation) 
+        values ('$surname','$otherNames','$email','$grade','$dept','$matric','$year')");
 
         if($query){
             return "ok"; //return ok if insertion was successful

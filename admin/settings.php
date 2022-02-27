@@ -22,7 +22,7 @@ if(isset($_POST['submit'])){
 
 ?>
 <div class="py-5">
-    <div class="row">
+    <div class="row w3-padding">
         <div class="col-12 col-md-1 col-lg-1 col-sm-1">
             &nbsp;
         </div>

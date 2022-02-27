@@ -1,4 +1,4 @@
-<!--Only super admin can upload voters or edit vote-->
+
 
     <div  style="    background: #1c2a39;" class="">
         <div class="w3-bar-block">
@@ -45,6 +45,14 @@
                     Upload Voters
                 </a>
             </div>
+            <div class="w3-bar-item w3-text navigation-link <?php echo $admin->compareNavLink('voting-log',$path) ?>"
+                 style="color: hsla(0,0%,100%,.8); font-size: 1em;">
+                <a href="voting-log.php" class="w3-block " style="padding:8px 10px">
+
+                    <i class="fa fa-list" style="font-size: 1.1em; margin-right: 0.3rem"></i>
+                    Voting Log
+                </a>
+            </div>
             <div class="w3-bar-item w3-text navigation-link  <?php echo $details['level']!=='super-admin' ? 'w3-hide' :''; echo $admin->compareNavLink('edit-vote',$path) ?>"
                  style="color: hsla(0,0%,100%,.8); font-size: 1em;">
                 <a href="edit-vote.php" class="w3-block " style="padding:8px 10px">
@@ -53,6 +61,15 @@
                     Edit Vote
                 </a>
             </div>
+            <div class="w3-bar-item w3-text navigation-link  <?php echo $details['level']!=='super-admin' ? 'w3-hide' :''; echo $admin->compareNavLink('uploaded-voters',$path) ?>"
+                 style="color: hsla(0,0%,100%,.8); font-size: 1em;">
+                <a href="uploaded-voters.php" class="w3-block " style="padding:8px 10px">
+
+                    <i class="fa fa-pencil" style="font-size: 1.1em; margin-right: 0.3rem"></i>
+                    Uploaded Voters
+                </a>
+            </div>
+
             <div class="w3-bar-item w3-text navigation-link  <?php echo $admin->compareNavLink('settings',$path) ?>"
                  style="color: hsla(0,0%,100%,.8); font-size: 1em;">
                 <a href="settings.php" class="w3-block " style="padding:8px 10px">

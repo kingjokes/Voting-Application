@@ -35,11 +35,13 @@ $settings = $admin->getSettings(); //get voting time settings
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet"
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../animate.css">
     <style>
         body {
-            font-family: 'Lato', sans-serif !important;
+            font-family: 'Public Sans', sans-serif!important;
             font-size: 1rem;
             font-weight: 400;
             line-height: 1.5;
@@ -123,11 +125,7 @@ $settings = $admin->getSettings(); //get voting time settings
             min-height: 100vh
 
         }
-        .bgimg-1 {
-            box-shadow:inset 0 0 0 150vw rgba(255,255,255,0.97);
-            background-image: url("{{asset('/img/logo.png')}}");
 
-        }
 
         .mybuttons {
             padding: 5px 10px;
@@ -221,8 +219,8 @@ $settings = $admin->getSettings(); //get voting time settings
     </div>
     <div class="w3-col l10 m9 s12" id="main" style="margin-left: 16.66%">
 
-        <nav class="navbar navbar-top navbar-expand navbar-light">
-            <div class="container-fluid">
+        <nav class="navbar  navbar-top navbar-expand navbar-light">
+            <div class="container-fluid w3-padding">
                 <div class="text-left text-capitalize">
                     <a href="javascript:void(0)" style="color: inherit" id="open">
                         <i class="fa fa-list w3-large w3-hide-large w3-hide-medium"></i>

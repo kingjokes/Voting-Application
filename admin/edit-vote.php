@@ -10,7 +10,9 @@ if($details['level']!=='super-admin'){?>
     <?php
 }
 if(isset($_POST['submit'])){
-    $submit = (new UserClass($conn))->saveVote([
+    $voterID= explode(',',$_POST['voter_id']);
+
+    $submit = $admin->saveUploadedVote([
         "president" => $_POST["president"] ?? '',
         "vice_president" => $_POST["vice_president"] ?? '',
         "vp_diaspora" => $_POST["vp_diaspora"] ?? '',
@@ -19,7 +21,7 @@ if(isset($_POST['submit'])){
         "treasurer" => $_POST["treasurer"] ?? '',
         "financial_secretary" => $_POST["financial_secretary"] ?? '',
         "publicity_secretary" => $_POST["publicity_secretary"] ?? '',
-    ],$_POST['voter_id']);
+    ],$voterID);
 
     if($submit){
         echo "<script>
@@ -44,142 +46,153 @@ $voteLog = $admin->getVoteBreakDown();
     <div class="row">
 
         <div class="col-12 col-md-12 col-lg-12 col-sm-12">
+            <span id="selected"></span>
             <div class="w3-responsive">
-                <div class="w3-container mb-3">
-                    <div class="w3-right">
-                        <input type="text" class="w3-card w3-text-dark-gray w3-input  w3-padding w3-round-medium w3-tiny w3-border w3-text-white" id="input" placeholder="search voters">
-
-
+                    <div class="w3-container mb-3">
+                        <div class="w3-left">
+                            <a href="javascript:void(0)" class="edit w3-teal w3-btn w3-small w3-round-medium">
+                                Edit All Votes
+                            </a>
+                        </div>
+                        <div class="w3-right">
+                            <input type="text" class="w3-card w3-text-dark-gray w3-input  w3-padding w3-round-medium w3-tiny w3-border w3-text-white" id="input" placeholder="search voters">
+                        </div>
                     </div>
-                </div>
-                <table class="w3-table-all w3-card-2 data-table">
-                    <thead>
-                    <tr class="w3-small">
-                        <th class="w3-border w3-border-light-gray">SN</th>
-                        <th class="w3-border w3-border-light-gray">Fullname</th>
-                        <th class="w3-border w3-border-light-gray">Email</th>
-                        <th class="w3-border w3-border-light-gray">Pres</th>
-                        <th class="w3-border w3-border-light-gray">VPres</th>
-                        <th class="w3-border w3-border-light-gray">VP Diaspora</th>
-                        <th class="w3-border w3-border-light-gray">Gen Sec</th>
-                        <th class="w3-border w3-border-light-gray">Asst Sec </th>
-                        <th class="w3-border w3-border-light-gray">Treasurer </th>
-                        <th class="w3-border w3-border-light-gray"> Fin Sec </th>
-                        <th class="w3-border w3-border-light-gray">Pub Sec </th>
-                        <th class="w3-border w3-border-light-gray">Status</th>
-                        <th class="w3-border w3-border-light-gray">Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                    if($voteLog[0]===0){
-                        ?>
+                    <table class="w3-table-all w3-card-2 data-table">
+                        <thead>
                         <tr class="w3-small">
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>No data found</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
+                            <th class="w3-border w3-border-light-gray">&nbsp;</th>
+                            <th class="w3-border w3-border-light-gray">SN</th>
+                            <th class="w3-border w3-border-light-gray">Fullname</th>
+                            <th class="w3-border w3-border-light-gray">Email</th>
+                            <th class="w3-border w3-border-light-gray">Pres</th>
+                            <th class="w3-border w3-border-light-gray">VPres</th>
+                            <th class="w3-border w3-border-light-gray">VP Diaspora</th>
+                            <th class="w3-border w3-border-light-gray">Gen Sec</th>
+                            <th class="w3-border w3-border-light-gray">Asst Sec </th>
+                            <th class="w3-border w3-border-light-gray">Treasurer </th>
+                            <th class="w3-border w3-border-light-gray"> Fin Sec </th>
+                            <th class="w3-border w3-border-light-gray">Pub Sec </th>
+                            <th class="w3-border w3-border-light-gray">Status</th>
                         </tr>
+                        </thead>
+                        <tbody>
                         <?php
-                    }else{
-                        $count=1;
-                        while ($result = $voteLog[1]->fetch_assoc()){
+                        if($voteLog[0]===0){
                             ?>
-                            <tr style="font-size: 12px">
-                                <td class=" w3-border w3-border-light-gray"><?php echo $count ?></td>
-                                <td class="text-capitalize w3-border w3-border-light-gray">
-                                    <?php echo $result['surname'].' '.$result['other_names'] ?>
-                                </td>
-                                <td class="text-lowercase w3-border w3-border-light-gray"><?php echo $result['email'] ?></td>
-                                <td class="w3-border w3-border-light-gray">
-                                    <?php
-                                    echo $result['president']==''
-                                        ? '<span class="w3-text-red">no vote</span>'
-                                        : '<span class="text-success">'.($admin->candidateDetails($result['president']))['candidate_name'].'</span>'
-                                    ?>
-                                </td>
-                                <td class="w3-border w3-border-light-gray">
-                                    <?php
-                                    echo $result['vice_president']==''
-                                        ? '<span class="w3-text-red">no vote</span>'
-                                        : '<span class="text-success">'.($admin->candidateDetails($result['vice_president']))['candidate_name'].'</span>'
-                                    ?>
-                                </td>
-                                <td class="w3-border w3-border-light-gray">
-                                    <?php
-                                    echo $result['vp_diaspora']==''
-                                        ? '<span class="w3-text-red">no vote</span>'
-                                        : '<span class="text-success">'.($admin->candidateDetails($result['vp_diaspora']))['candidate_name'].'</span>'
-                                    ?>
-                                </td>
-                                <td class="w3-border w3-border-light-gray">
-                                    <?php
-                                    echo $result['general_secretary']==''
-                                        ? '<span class="w3-text-red">no vote</span>'
-                                        : '<span class="text-success">'.($admin->candidateDetails($result['general_secretary']))['candidate_name'].'</span>'
-                                    ?>
-                                </td>
-                                <td class="w3-border w3-border-light-gray">
-                                    <?php
-                                    echo $result['assistant_secretary']==''
-                                        ? '<span class="w3-text-red">no vote</span>'
-                                        : '<span class="text-success">'.($admin->candidateDetails($result['assistant_secretary']))['candidate_name'].'</span>'
-                                    ?>
-                                </td>
-                                <td class="w3-border w3-border-light-gray">
-                                    <?php
-                                    echo $result['treasurer']==''
-                                        ? '<span class="w3-text-red">no vote</span>'
-                                        : '<span class="text-success">'.($admin->candidateDetails($result['treasurer']))['candidate_name'].'</span>'
-                                    ?>
-                                </td>
-                                <td class="w3-border w3-border-light-gray">
-                                    <?php
-                                    echo $result['financial_secretary']==''
-                                        ? '<span class="w3-text-red">no vote</span>'
-                                        : '<span class="text-success">'.($admin->candidateDetails($result['financial_secretary']))['candidate_name'].'</span>'
-                                    ?>
-                                </td>
-                                <td class="w3-border w3-border-light-gray">
-                                    <?php
-                                    echo $result['publicity_secretary']==''
-                                        ? '<span class="w3-text-red">no vote</span>'
-                                        : '<span class="text-success">'.($admin->candidateDetails($result['publicity_secretary']))['candidate_name'].'</span>'
-                                    ?>
-                                </td>
-
-                                <td class="w3-border w3-border-light-gray">
-                                    <?php
-                                    echo  $result['status']== 1
-                                        ? ' <span class="text-success">voted</span'
-                                        :' <span class="text-danger">not voted</span'
-                                    ?>
-                                </td>
-                                <td class="">
-                                    <a href="javascript:void(0)" data-name="<?php echo $result['surname'].' '.$result['other_names'] ?>"  data-voter="<?php echo $result['id']  ?>" class="w3-text-gray w3-hover-text-dark-gray ml-1 edit" title="edit vote">
-                                        <i class="fa fa-pencil"></i>
-                                    </a>
-                                </td>
-
-
+                            <tr class="w3-small">
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>No data found</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
                             </tr>
                             <?php
-                            $count++;
-                        }
-                    }
-                    ?>
-                    </tbody>
+                        }else{
+                            $count=1;
+                            while ($result = $voteLog[1]->fetch_assoc()){
+                                ?>
+                                <tr style="font-size: 12px">
+                                    <td class=" w3-border w3-border-light-gray">
+                                        <input class="change" value="<?php echo $result['id'] ?>" type="checkbox" name="voters[]" style="cursor:pointer; width:20px; height:20px;  " size="15">
+                                    </td>
 
-                </table>
+                                    <td class=" w3-border w3-border-light-gray"><?php echo $count ?></td>
+                                    <td class="text-capitalize w3-border w3-border-light-gray">
+                                        <?php echo $result['surname'].' '.$result['other_names'] ?>
+                                    </td>
+                                    <td class="text-lowercase w3-border w3-border-light-gray"><?php echo $result['email'] ?></td>
+                                    <td class="w3-border w3-border-light-gray">
+                                        <?php
+                                        echo $result['president']==''
+                                            ? '<span class="w3-text-red">no vote</span>'
+                                            : '<span class="text-success">'.($admin->candidateDetails($result['president']))['candidate_name'].'</span>'
+                                        ?>
+                                    </td>
+                                    <td class="w3-border w3-border-light-gray">
+                                        <?php
+                                        echo $result['vice_president']==''
+                                            ? '<span class="w3-text-red">no vote</span>'
+                                            : '<span class="text-success">'.($admin->candidateDetails($result['vice_president']))['candidate_name'].'</span>'
+                                        ?>
+                                    </td>
+                                    <td class="w3-border w3-border-light-gray">
+                                        <?php
+                                        echo $result['vp_diaspora']==''
+                                            ? '<span class="w3-text-red">no vote</span>'
+                                            : '<span class="text-success">'.($admin->candidateDetails($result['vp_diaspora']))['candidate_name'].'</span>'
+                                        ?>
+                                    </td>
+                                    <td class="w3-border w3-border-light-gray">
+                                        <?php
+                                        echo $result['general_secretary']==''
+                                            ? '<span class="w3-text-red">no vote</span>'
+                                            : '<span class="text-success">'.($admin->candidateDetails($result['general_secretary']))['candidate_name'].'</span>'
+                                        ?>
+                                    </td>
+                                    <td class="w3-border w3-border-light-gray">
+                                        <?php
+                                        echo $result['assistant_secretary']==''
+                                            ? '<span class="w3-text-red">no vote</span>'
+                                            : '<span class="text-success">'.($admin->candidateDetails($result['assistant_secretary']))['candidate_name'].'</span>'
+                                        ?>
+                                    </td>
+                                    <td class="w3-border w3-border-light-gray">
+                                        <?php
+                                        echo $result['treasurer']==''
+                                            ? '<span class="w3-text-red">no vote</span>'
+                                            : '<span class="text-success">'.($admin->candidateDetails($result['treasurer']))['candidate_name'].'</span>'
+                                        ?>
+                                    </td>
+                                    <td class="w3-border w3-border-light-gray">
+                                        <?php
+                                        echo $result['financial_secretary']==''
+                                            ? '<span class="w3-text-red">no vote</span>'
+                                            : '<span class="text-success">'.($admin->candidateDetails($result['financial_secretary']))['candidate_name'].'</span>'
+                                        ?>
+                                    </td>
+                                    <td class="w3-border w3-border-light-gray">
+                                        <?php
+                                        echo $result['publicity_secretary']==''
+                                            ? '<span class="w3-text-red">no vote</span>'
+                                            : '<span class="text-success">'.($admin->candidateDetails($result['publicity_secretary']))['candidate_name'].'</span>'
+                                        ?>
+                                    </td>
+
+                                    <td class="w3-border w3-border-light-gray">
+                                        <?php
+                                        echo  $result['status']== 1
+                                            ? ' <span class="text-success">voted</span'
+                                            :' <span class="text-danger">not voted</span'
+                                        ?>
+                                    </td>
+                                    <td class="w3-center w3-hide">
+
+                                        <a href="javascript:void(0)" data-name="<?php echo $result['surname'].' '.$result['other_names'] ?>"  data-voter="<?php echo $result['id']  ?>" class="w3-text-gray w3-hover-text-dark-gray ml-1 edit" title="edit vote">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+
+                                    </td>
+
+
+                                </tr>
+                                <?php
+                                $count++;
+                            }
+                        }
+                        ?>
+                        </tbody>
+
+                    </table>
             </div>
+
         </div>
 
     </div>
@@ -189,7 +202,7 @@ $voteLog = $admin->getVoteBreakDown();
     <div class="modal-dialog modal- modal-dialog-centered modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="mb-0 h3">Edit Vote - <span class="text-info" id="voter_name">1</span> </h3>
+                <h3 class="mb-0 h3">Edit Votes </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -414,10 +427,20 @@ $voteLog = $admin->getVoteBreakDown();
 
 <script>
     $(document).ready(function () {
+        let selected=[]
+        $('.change').on('change',function(e){
+            e.preventDefault()
+            let value = $(this).val()
+            let find= selected.findIndex(item=>item===value)
+            if(find===-1){
+                return  selected.push(value)
 
+            }
+            return  selected.splice(find,1)
+        })
         $('.edit').click(function(){
             $('#voter_name').text($(this).attr('data-name'))
-            $('#voter_id').val($(this).attr('data-voter'))
+            $('#voter_id').val(selected.join(','))
             $('#modal-formx').modal('show')
 
         });
